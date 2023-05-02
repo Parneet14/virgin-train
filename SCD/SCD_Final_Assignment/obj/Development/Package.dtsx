@@ -1,0 +1,503 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="5/10/2021 3:33:55 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="LAPTOP-BQ2RHD7A"
+  DTS:CreatorName="LAPTOP-BQ2RHD7A\harry"
+  DTS:DTSID="{88623F3B-7B40-4606-91EA-19E28D6F9AE2}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.150"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Package"
+  DTS:PackageType="5"
+  DTS:VersionBuild="4"
+  DTS:VersionGUID="{9D9DC4A6-FDA5-45E3-B768-E1247D339C7C}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[LAPTOP-BQ2RHD7A.Virgin]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{C8B1C2D3-C45F-4BA3-9849-673DA2A21F7E}"
+      DTS:ObjectName="LAPTOP-BQ2RHD7A.Virgin">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=LAPTOP-BQ2RHD7A;Initial Catalog=Virgin;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{7C0EC49A-DE5C-4CE3-A95A-4FBC3AD6A948}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="SalesMaster">
+      <DTS:VariableValue
+        DTS:DataSubType="ManagedSerializable"
+        DTS:DataType="13">
+        <SOAP-ENV:Envelope xmlns:clr="http://schemas.microsoft.com/soap/encoding/clr/1.0" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+          <SOAP-ENV:Body>
+            <xsd:anyType
+              id="ref-1"></xsd:anyType>
+          </SOAP-ENV:Body>
+        </SOAP-ENV:Envelope>
+      </DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{DB067A49-645F-44F1-A67A-B9E9E33B9CD2}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="SalesNumber">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Foreach Loop Container"
+      DTS:CreationName="STOCK:FOREACHLOOP"
+      DTS:Description="Foreach Loop Container"
+      DTS:DTSID="{1C72D1DC-D785-44DD-88E0-439580939ECE}"
+      DTS:ExecutableType="STOCK:FOREACHLOOP"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Foreach Loop Container">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Foreach Loop Container\Execute SQL Task"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{647C446A-772E-4106-8C08-6A011B6AEB67}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Execute SQL Task"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{C8B1C2D3-C45F-4BA3-9849-673DA2A21F7E}"
+              SQLTask:SqlStatementSource="update [dbo].[Sales_changes]&#xA;set currentIndicator =0 where Train_id=?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="User::SalesNumber"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="129"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Insert current Record"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{C9603050-CCD1-49B0-BA04-2065B63CF6B6}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Insert current Record"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{C8B1C2D3-C45F-4BA3-9849-673DA2A21F7E}"
+          SQLTask:SqlStatementSource="insert into sales&#xA;select * from [dbo].[Sales_changes]" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Sales"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{BFF72173-7C9C-4CB0-AC2A-4B488B3A8E4C}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Sales"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Sales\Recordset Destination"
+              componentClassID="Microsoft.RecordsetDestination"
+              contactInfo="Recordset Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates and populates an in-memory ADO recordset that is available outside of the data flow. Scripts and other package elements can use the recordset. For example, use a recordset to store the names of files that will be loaded into the data warehouse."
+              name="Recordset Destination">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the recordset."
+                  name="VariableName">User::SalesMaster</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Sales\Recordset Destination.Inputs[Recordset Destination Input]"
+                  hasSideEffects="true"
+                  name="Recordset Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Sales\Recordset Destination.Inputs[Recordset Destination Input].Columns[Train_id]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="150"
+                      cachedName="Train_id"
+                      lineageId="Package\Sales\Sales_Changes.Outputs[OLE DB Source Output].Columns[Train_id]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+            </component>
+            <component
+              refId="Package\Sales\Sales_Changes"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="Sales_Changes"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[Sales_changes]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Sales\Sales_Changes.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[LAPTOP-BQ2RHD7A.Virgin]"
+                  connectionManagerRefId="Package.ConnectionManagers[LAPTOP-BQ2RHD7A.Virgin]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Sales\Sales_Changes.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Sales\Sales_Changes.Outputs[OLE DB Source Output].Columns[Train_id]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Sales\Sales_Changes.Outputs[OLE DB Source Output].ExternalColumns[Train_id]"
+                      length="150"
+                      lineageId="Package\Sales\Sales_Changes.Outputs[OLE DB Source Output].Columns[Train_id]"
+                      name="Train_id"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Sales\Sales_Changes.Outputs[OLE DB Source Output].ExternalColumns[DateUpdate]"
+                      dataType="dbDate"
+                      name="DateUpdate" />
+                    <externalMetadataColumn
+                      refId="Package\Sales\Sales_Changes.Outputs[OLE DB Source Output].ExternalColumns[Train_id]"
+                      codePage="1252"
+                      dataType="str"
+                      length="150"
+                      name="Train_id" />
+                    <externalMetadataColumn
+                      refId="Package\Sales\Sales_Changes.Outputs[OLE DB Source Output].ExternalColumns[Complaint_Id]"
+                      codePage="1252"
+                      dataType="str"
+                      length="150"
+                      name="Complaint_Id" />
+                    <externalMetadataColumn
+                      refId="Package\Sales\Sales_Changes.Outputs[OLE DB Source Output].ExternalColumns[Tickect_Id]"
+                      codePage="1252"
+                      dataType="str"
+                      length="150"
+                      name="Tickect_Id" />
+                    <externalMetadataColumn
+                      refId="Package\Sales\Sales_Changes.Outputs[OLE DB Source Output].ExternalColumns[Employee_Id]"
+                      codePage="1252"
+                      dataType="str"
+                      length="150"
+                      name="Employee_Id" />
+                    <externalMetadataColumn
+                      refId="Package\Sales\Sales_Changes.Outputs[OLE DB Source Output].ExternalColumns[Revenue]"
+                      codePage="1252"
+                      dataType="str"
+                      length="150"
+                      name="Revenue" />
+                    <externalMetadataColumn
+                      refId="Package\Sales\Sales_Changes.Outputs[OLE DB Source Output].ExternalColumns[Profit]"
+                      codePage="1252"
+                      dataType="str"
+                      length="150"
+                      name="Profit" />
+                    <externalMetadataColumn
+                      refId="Package\Sales\Sales_Changes.Outputs[OLE DB Source Output].ExternalColumns[CurrentIndicator]"
+                      dataType="i4"
+                      name="CurrentIndicator" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Sales\Sales_Changes.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Sales\Sales_Changes.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Sales\Sales_Changes.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Sales\Sales_Changes.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Sales\Sales_Changes.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                    <outputColumn
+                      refId="Package\Sales\Sales_Changes.Outputs[OLE DB Source Error Output].Columns[Train_id]"
+                      codePage="1252"
+                      dataType="str"
+                      length="150"
+                      lineageId="Package\Sales\Sales_Changes.Outputs[OLE DB Source Error Output].Columns[Train_id]"
+                      name="Train_id" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Sales.Paths[OLE DB Source Output]"
+              endId="Package\Sales\Recordset Destination.Inputs[Recordset Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\Sales\Sales_Changes.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{53E7D462-3C93-40D9-9BBB-EA095C8DD118}"
+      DTS:From="Package\Sales"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Foreach Loop Container" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{B2173DA0-FD3F-48F0-A3C3-52688A76C2FC}"
+      DTS:From="Package\Foreach Loop Container"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Insert current Record" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="102.4,41.6"
+          Id="Package\Sales"
+          TopLeft="267.857147418723,23.7058826854072" />
+        <NodeLayout
+          Size="162.4,41.6"
+          Id="Package\Foreach Loop Container\Execute SQL Task"
+          TopLeft="35.1714332303224,23.1882377286271" />
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="204.8,120"
+          Size="204.8,163.2"
+          Id="Package\Foreach Loop Container"
+          TopLeft="238.571432634276,107.058825030871" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="319.057147418723,65.3058826854072">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="21.914285215553,41.7529423454641"
+              Start="0,0"
+              End="21.914285215553,34.2529423454641">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,16.8764711727321" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,16.8764711727321"
+                    Point2="0,20.8764711727321"
+                    Point3="4,20.8764711727321" />
+                  <mssgle:LineSegment
+                    End="17.914285215553,20.8764711727321" />
+                  <mssgle:CubicBezierSegment
+                    Point1="17.914285215553,20.8764711727321"
+                    Point2="21.914285215553,20.8764711727321"
+                    Point3="21.914285215553,24.8764711727321" />
+                  <mssgle:LineSegment
+                    End="21.914285215553,34.2529423454641" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="179.2,41.6"
+          Id="Package\Insert current Record"
+          TopLeft="302.142862288319,315.058827947993" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="340.971432634276,270.258825030871">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="50.7714296540436,44.8000029171215"
+              Start="0,0"
+              End="50.7714296540436,37.3000029171215">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,18.4000014585608" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,18.4000014585608"
+                    Point2="0,22.4000014585608"
+                    Point3="4,22.4000014585608" />
+                  <mssgle:LineSegment
+                    End="46.7714296540436,22.4000014585608" />
+                  <mssgle:CubicBezierSegment
+                    Point1="46.7714296540436,22.4000014585608"
+                    Point2="50.7714296540436,22.4000014585608"
+                    Point3="50.7714296540436,26.4000014585608" />
+                  <mssgle:LineSegment
+                    End="50.7714296540436,37.3000029171215" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Sales">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="148.8,41.6"
+          Id="Package\Sales\Sales_Changes"
+          TopLeft="292.85714784447,64.2352950185228" />
+        <NodeLayout
+          Size="181.6,41.6"
+          Id="Package\Sales\Recordset Destination"
+          TopLeft="332.142862799216,201.117649879423" />
+        <EdgeLayout
+          Id="Package\Sales.Paths[OLE DB Source Output]"
+          TopLeft="367.25714784447,105.835295018523">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="55.6857149547459,95.2823548608998"
+              Start="0,0"
+              End="55.6857149547459,87.7823548608998">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,43.6411774304499" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,43.6411774304499"
+                    Point2="0,47.6411774304499"
+                    Point3="4,47.6411774304499" />
+                  <mssgle:LineSegment
+                    End="51.6857149547459,47.6411774304499" />
+                  <mssgle:CubicBezierSegment
+                    Point1="51.6857149547459,47.6411774304499"
+                    Point2="55.6857149547459,47.6411774304499"
+                    Point3="55.6857149547459,51.6411774304499" />
+                  <mssgle:LineSegment
+                    End="55.6857149547459,87.7823548608998" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Sales\Sales_Changes">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
